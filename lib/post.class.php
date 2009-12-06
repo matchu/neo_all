@@ -3,17 +3,21 @@ require_once dirname(__FILE__).'/db.php';
 class Post {
   public $item, $source_id, $hash;
   
-  public function save_if_not_yet_saved() {
-    $statement = db_query('INSERT IGNORE INTO post (hash, source_id)
-      VALUES(?, ?)', 'ss', $this->hash(), $this->source_id);
-    if(!file_exists($this->cache_location())) {
-      $this->write_cache();
-    }
+  public function save() {
+    $statement = db_query('REPLACE post
+      (hash, source_id, content_hash) VALUES(?, ?, ?)', 'sss', $this->hash(),
+      $this->source_id, $this->content_hash());
+    $this->write_cache();
   }
   
   private function hash() {
     if(!isset($this->hash)) $this->hash = md5($this->item->get_id());
     return $this->hash;
+  }
+  
+  private function content_hash() {
+    $content = $this->item->get_content();
+    return md5($content);
   }
   
   private function write_cache() {

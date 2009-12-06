@@ -14,7 +14,8 @@ CREATE TABLE post (
   source_id VARCHAR(10) NOT NULL,
   INDEX (source_id),
   post_time TIMESTAMP NOT NULL,
-  INDEX (post_time)
+  INDEX (post_time),
+  content_hash VARCHAR(32) NOT NULL
 )
 SQL
     );

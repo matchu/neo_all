@@ -1,0 +1,4 @@
+ExpiresActive On
+ExpiresDefault "access plus 10 years"
+# if posts update, the query string on fetching should change, so long-term
+# expires date is ideal

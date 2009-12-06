@@ -38,7 +38,7 @@ class Source {
       $post = new Post();
       $post->item = $item;
       $post->source_id = $this->id;
-      $post->save_if_not_yet_saved();
+      $post->save();
     }
     return count($items);
   }
