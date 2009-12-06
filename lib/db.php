@@ -1,30 +1,71 @@
 <?php
-function db_query($sql) {
-  static $mysqli;
-  if(!isset($mysqli)) {
-    require_once dirname(__FILE__).'/../config/db_config.php';
-    $mysqli = new mysqli($db_config['host'], $db_config['username'],
-      $db_config['password'], $db_config['dbname']);
+class NeoAllDb {
+  static $pdo;
+  
+  public function __construct() {
+    if(!isset(self::$pdo)) {
+      require_once dirname(__FILE__).'/../config/db_config.php';
+      self::$pdo = new PDO("mysql:host=${db_config[host]};dbname=${db_config[dbname]}",
+        $db_config['username'],
+        $db_config['password']);
+    }
   }
-  $args = func_get_args();
-  array_shift($args);
-  if($args) {
-    if(!$statement = $mysqli->prepare($sql)) {
-      throw new DbError($mysqli->error);
-    }
-    foreach($args as $key => $value) {
-      call_user_func_array(array($statement, 'bind_param'), $args);
-    }
-    if(!$statement->execute()) {
-      $location = array_shift(debug_backtrace());
-      throw new DbError($mysqli->error);
+  
+  public function query($sql, $args=null) {
+    if($args) {
+      $statement = $this->prepare($sql);
+      $statement->execute($args);
+    } else {
+      $statement = self::$pdo->query($sql);
     }
     return $statement;
-  } else {
-    return $mysqli->query($sql);
+  }
+  
+  public function prepare() {
+    $args = func_get_args();
+    $statement = new NeoAllDbStatement(self::$pdo);
+    $statement->init($args);
+    return $statement;
   }
 }
 
-class DbError extends Exception {}
+class NeoAllDbStatement {
+  private $pdo, $statement;
+  
+  public function __construct($pdo) {
+    $this->pdo = $pdo;
+  }
+  
+  public function init($args) {
+    $this->statement = call_user_func_array(array($this->pdo, 'prepare'), $args);
+    if(!$this->statement) {
+      throw $this->db_error();
+    }
+    return true;
+  }
+  
+  public function execute() {
+    $args = func_get_args();
+    if(!call_user_func_array(array($this->statement, 'execute'), $args)) {
+      throw $this->db_error();
+    }
+    return true;
+  }
+  
+  public function __call($name, $arguments) {
+    return call_user_func_array(array($this->statement, $name), $arguments);
+  }
+  
+  private function db_error() {
+    return new DbError($this);
+  }
+}
+
+class DbError extends Exception {
+  function __construct($pdo) {
+    $errorInfo = $pdo->errorInfo();
+    parent::__construct($errorInfo[2]);
+  }
+}
 
 ?>
