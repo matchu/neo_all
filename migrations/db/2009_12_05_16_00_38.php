@@ -13,7 +13,7 @@ CREATE TABLE post (
   UNIQUE INDEX(hash),
   source_id VARCHAR(10) NOT NULL,
   INDEX (source_id),
-  post_time TIMESTAMP NOT NULL,
+  post_time DATETIME NOT NULL,
   INDEX (post_time),
   content_hash VARCHAR(32) NOT NULL
 )

@@ -1,3 +1,49 @@
+#container {
+  border: 1px solid #aaa;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.post {
+  border-bottom: 1px solid #aaa;
+}
+
+.post h2 a {
+  color: black;
+  text-decoration: none;
+}
+
+.post h2 a:hover {
+  text-decoration: underline;
+}
+
+.post-source-favicon {
+  font-size: 75%;
+}
+
+.loading {
+  background: url(/assets/loading.gif) no-repeat center 8px !important;
+  height: 24px;
+}
+
+#next-page {
+  background-color: #ddd;
+  border: 1px solid #777;
+  border-width: 1px 0;
+  color: #000;
+  display: block;
+  font-size: 200%;
+  margin: 1em auto;
+  padding: 20px 0;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+#next-page:hover {
+  background: #eee;
+}
+
 noscript {
   color: red;
   font-weight: bold;

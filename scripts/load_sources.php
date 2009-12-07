@@ -8,4 +8,6 @@ foreach(Source::all() as $source) {
   $count = $source->load_posts();
   echo " $count loaded.\n";
 }
+
+Source::clear_cache();
 ?>

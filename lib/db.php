@@ -16,7 +16,9 @@ class NeoAllDb {
       $statement = $this->prepare($sql);
       $statement->execute($args);
     } else {
-      $statement = self::$pdo->query($sql);
+      if(!$statement = self::$pdo->query($sql)) {
+        throw new NeoAllDbError(self::$pdo);
+      }
     }
     return $statement;
   }
@@ -26,6 +28,10 @@ class NeoAllDb {
     $statement = new NeoAllDbStatement(self::$pdo);
     $statement->init($args);
     return $statement;
+  }
+  
+  public function quote($str) {
+    return self::$pdo->quote($str);
   }
 }
 
@@ -57,11 +63,11 @@ class NeoAllDbStatement {
   }
   
   private function db_error() {
-    return new DbError($this);
+    return new NeoAllDbError($this);
   }
 }
 
-class DbError extends Exception {
+class NeoAllDbError extends Exception {
   function __construct($pdo) {
     $errorInfo = $pdo->errorInfo();
     parent::__construct($errorInfo[2]);

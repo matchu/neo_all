@@ -2,9 +2,10 @@
 class Source {
 
   // List of available feed sources.
-  // Add, edit, remove as necessary, but do NOT modify the keys!
+  // Add, edit, remove as necessary, but DO NOT MODIFY THE KEYS!
   // The keys link posts in DB to their respective source.
-  // 
+  // Commas may not be used in keys, since it is a separator in /www/sources/
+  //
   static $all_sources = array(
     'jn' => array(
       'name' => 'Jellyneo',
@@ -13,6 +14,10 @@ class Source {
     'tdn' => array(
       'name' => 'The Daily Neopets',
       'feed_url' => 'http://www.tdnforums.com/index.php?act=rssout&id=2'
+    ),
+    'nnon' => array(
+      'name' => 'Neo Nutters of Neopia',
+      'feed_url' => 'http://www.neonuttersofneopia.com/rss_neopets.php'
     )
   );
   
@@ -49,5 +54,15 @@ class Source {
     }
     return $sources;
   }
+  
+  public static function clear_cache() {
+    $source_cache_files = glob(dirname(__FILE__).'/../www/sources/*/*.json');
+    foreach($source_cache_files as $source_cache_file) {
+      unlink($source_cache_file);
+      echo "Deleted source cache file $source_cache_file\n";
+    }
+  }
 }
+
+class SourceNotFound extends Exception {}
 ?>

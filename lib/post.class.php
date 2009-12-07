@@ -3,8 +3,8 @@ require_once dirname(__FILE__).'/db.php';
 require_once dirname(__FILE__).'/simplepie.inc';
 
 class Post {
-  public $item, $source_id, $hash;
-  private static $attr_names = array('item', 'source_id', 'hash');
+  public $item, $source_id, $hash, $source;
+  private static $attr_names = array('item', 'source_id', 'hash', 'post_time');
   
   function __construct($row=null) {
     if($row) {
@@ -19,9 +19,9 @@ class Post {
   public function save() {
     $db = new NeoAllDb();
     $statement = $db->query('REPLACE post
-      (hash, source_id, content_hash, item) VALUES(?, ?, ?, ?)',
-      array($this->hash(), $this->source_id, $this->content_hash(),
-        serialize($this->item)));
+      (hash, source_id, post_time, content_hash, item) VALUES(?, ?, ?, ?, ?)',
+      array($this->hash(), $this->source_id, $this->item->get_date('Y-m-d H:i:s'),
+        $this->content_hash(), serialize($this->item)));
     $this->write_cache();
   }
   
@@ -31,6 +31,7 @@ class Post {
     $file = fopen($write_to, 'w');
     $body = $this->item->get_content();
     $template = new NeoAllTemplate();
+    $template->post = $this;
     $template->item = $this->item;
     $content = $template->fetch('post.tpl.php');
     fwrite($file, $content);
@@ -52,11 +53,16 @@ class Post {
     return "posts/" . $this->hash() . '.html';
   }
   
-  public function __destruct() {
+  public function unset_feed() {
     // PHP bug requires that we explicitly destruct this item in <PHP5.3
     // or else we get memory leaks
     $this->item->feed->__destruct();
-    unset($this->item);
+    unset($this->item->feed);
+  }
+  
+  public function get_source() {
+    if(!$source) $this->source = new Source($this->source_id);
+    return $this->source;
   }
 }
 ?>

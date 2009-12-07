@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# if file exists, then don't look at any of the following rules
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+RewriteRule ^(.+?)/(top|(before|after)_.+?)\.json$ source.php?directory=$1&file=$2
