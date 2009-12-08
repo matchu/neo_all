@@ -56,9 +56,11 @@ if($posts && !file_exists($cache_to)) {
   if(!file_exists($directory)) {
     mkdir($directory, 0777);
   }
-  $file = fopen($cache_to, 'w');
-  fwrite($file, $output);
-  fclose($file);
+  // not caching is bad, but not worth crashing
+  if($file = fopen($cache_to, 'w')) {
+    fwrite($file, $output);
+    fclose($file);
+  }
   umask($old);
 }
 
