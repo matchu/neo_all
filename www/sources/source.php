@@ -1,12 +1,9 @@
 <?php
-// TODO: implement by last post on page instead?
-// TODO: cache must clear on each source load
-
 foreach(array('source.class', 'post.class', 'db', 'stripslashes') as $lib) {
   require_once dirname(__FILE__)."/../../lib/$lib.php";
 }
 
-$db = new NeoAllDb();
+$db = neoAllDb();
 
 $directory = $_GET['directory'];
 $file = $_GET['file'];
@@ -41,8 +38,8 @@ $conditions = implode(' AND ', $conditions_array);
 $posts_query = $db->query("SELECT hash, cached_at FROM post
   WHERE $conditions ORDER BY post_time DESC LIMIT 0,10");
 $posts = array();
-while($post_row = $posts_query->fetch()) {
-  $post = new stdClass();
+while($post_row = $posts_query->fetchRow(MDB2_FETCHMODE_ASSOC)) {
+  $post = (object) array();
   $post->hash = $post_row['hash'];
   $post->time = strtotime($post_row['cached_at']);
   $posts[] = $post;

@@ -17,11 +17,15 @@ class Post {
   }
   
   public function save() {
-    $db = new NeoAllDb();
-    $statement = $db->query('REPLACE post
-      (hash, source_id, post_time, content_hash, item) VALUES(?, ?, ?, ?, ?)',
-      array($this->hash(), $this->source_id, $this->item->get_date('Y-m-d H:i:s'),
-        $this->content_hash(), serialize($this->item)));
+    $db = neoAllDb();
+    $statement = $db->exec('REPLACE post
+      (hash, source_id, post_time, content_hash, item) VALUES('
+      .$db->quote($this->hash()).', '
+      .$db->quote($this->source_id).', '
+      .$db->quote($this->item->get_date('Y-m-d H:i:s')).', '
+      .$db->quote($this->content_hash()).', '
+      .$db->quote(serialize($this->item))
+    .')');
     $this->write_cache();
   }
   
