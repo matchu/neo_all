@@ -4,7 +4,7 @@
   </a>
   <?php
     $icon_template = new NeoAllTemplate();
-    $icon_template->source = $this->post->source;
+    $icon_template->source = $this->post->get_source();
     $icon_template->output('source_icon.tpl.php');
   ?>
 </h2>
