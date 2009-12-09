@@ -2,6 +2,15 @@ body {
   padding: 0 1em;
 }
 
+a {
+  color: #0000AA;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 #header {
   display: block;
   margin: 1em 0;
@@ -83,4 +92,13 @@ h2.post-title a:hover {
   display: block;
   margin: 1em 0;
   padding: .75em 1em;
+}
+
+#footer {
+  margin: 3em 0;
+  text-align: center;
+}
+
+#footer span {
+  margin: 0 1em;
 }

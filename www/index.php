@@ -37,6 +37,7 @@ require_once '../lib/template.class.php';
       <div id="posts" class="loading"></div>
       <a id="next-page" href="#">next page &raquo;</a>
     </div>
+    <?php include('footer.html'); ?>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <script type="text/javascript" src="/assets/index.js"></script>
   </body>
