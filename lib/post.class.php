@@ -17,14 +17,17 @@ class Post {
   }
   
   public function save() {
+    // TODO: too tired right now - check if content_hash has changed
+    // to decide whether or not to write_cache and update cached timestamp
     $db = new NeoAllDb();
     $exec = $db->exec('REPLACE post
-      (hash, source_id, posted_at, content_hash, item) VALUES('
+      (hash, source_id, posted_at, content_hash, item, cached_at) VALUES('
       .$db->quote($this->hash()).', '
       .$db->quote($this->source_id).', '
       .$db->quote($this->item->get_date('Y-m-d H:i:s')).', '
       .$db->quote($this->content_hash()).', '
-      .$db->quote(serialize($this->item))
+      .$db->quote(serialize($this->item)).', '
+      .'CURRENT_TIMESTAMP()'
     .')');
     $this->write_cache();
   }

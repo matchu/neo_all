@@ -111,3 +111,15 @@ Dec 09 03:50:43 [info] ALTER post MODIFY item LONGTEXT
 Dec 09 03:51:02 [info] SELECT version FROM `schema_info`
 Dec 09 03:51:02 [info] ALTER TABLE post MODIFY COLUMN item LONGTEXT
 Dec 09 03:51:03 [info] UPDATE `schema_info` SET version = 2
+Dec 09 04:27:03 [info] SELECT version FROM `schema_info`
+Dec 09 04:27:03 [info] SHOW COLUMNS FROM `post` LIKE 'cached_at'
+Dec 09 04:27:12 [info] SELECT version FROM `schema_info`
+Dec 09 04:27:12 [info] SHOW COLUMNS FROM `post` LIKE 'cached_at'
+Dec 09 04:27:12 [info] ALTER TABLE `post` CHANGE `cached_at` `cached_at` datetime DEFAULT 'CURRENT_TIMESTAMP'
+Dec 09 04:28:30 [info] SELECT version FROM `schema_info`
+Dec 09 04:28:30 [info] SHOW COLUMNS FROM `post` LIKE 'cached_at'
+Dec 09 04:28:30 [info] ALTER TABLE `post` CHANGE `cached_at` `cached_at` time DEFAULT 'CURRENT_TIMESTAMP'
+Dec 09 04:30:09 [info] SELECT version FROM `schema_info`
+Dec 09 04:30:09 [info] ALTER TABLE post MODIFY COLUMN cached_at TIMESTAMP
+      DEFAULT CURRENT_TIMESTAMP
+Dec 09 04:30:09 [info] UPDATE `schema_info` SET version = 3
