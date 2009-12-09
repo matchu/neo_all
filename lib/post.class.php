@@ -18,16 +18,13 @@ class Post {
   
   public function save() {
     $db = new NeoAllDb();
-    $item_to_serialize = $this->item;
-    // don't serialize all other items in feed, thanks
-    unset($item_to_serialize->feed->data);
     $exec = $db->exec('REPLACE post
       (hash, source_id, posted_at, content_hash, item) VALUES('
       .$db->quote($this->hash()).', '
       .$db->quote($this->source_id).', '
       .$db->quote($this->item->get_date('Y-m-d H:i:s')).', '
       .$db->quote($this->content_hash()).', '
-      .$db->quote(serialize($item_to_serialize))
+      .$db->quote(serialize($this->item))
     .')');
     $this->write_cache();
   }
