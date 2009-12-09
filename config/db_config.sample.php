@@ -10,7 +10,10 @@
   * username: User name for login
   * password: Password for login 
   
-  That's right - NeoAll should theoretically work with any database.
+  Though you can here use any type of database (theoretically), only MySQL
+  works with the migrations system. Still, you can adapt the schema found
+  in migrations/db/schema.txt to your own database and use that if you are
+  so inclined. Or, you can use MySQL.
 */
 
 $db_config = array(

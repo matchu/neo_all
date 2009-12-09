@@ -44,6 +44,7 @@ class Source {
       $post->item = $item;
       $post->source_id = $this->id;
       $post->save();
+      unset($post);
     }
     return count($items);
   }

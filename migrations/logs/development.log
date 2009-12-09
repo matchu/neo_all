@@ -1,0 +1,89 @@
+
+Jun 08 01:35:14 [info] UPDATE `schema_info` SET version = 93
+Dec 09 01:09:36 [info] CREATE TABLE `schema_info` (
+`version` int(11) DEFAULT '0' NOT NULL
+) ;
+Dec 09 01:09:36 [info] INSERT INTO `schema_info` (version) VALUES (0)
+Dec 09 01:09:40 [info] SELECT version FROM `schema_info`
+Dec 09 01:22:42 [info] SELECT version FROM `schema_info`
+Dec 09 01:22:42 [info] CREATE TABLE `post` (
+`id` int(11) UNSIGNED auto_increment PRIMARY KEY,
+`hash` varchar(32),
+`content_hash` varchar(32),
+`source_id` varchar(10),
+`cached_at` datetime,
+`posted_at` datetime,
+`item` text
+) ;
+Dec 09 01:22:56 [info] SELECT version FROM `schema_info`
+Dec 09 01:22:56 [info] CREATE TABLE `post` (
+`id` int(11) UNSIGNED auto_increment PRIMARY KEY,
+`hash` varchar(32),
+`content_hash` varchar(32),
+`source_id` varchar(10),
+`cached_at` datetime,
+`posted_at` datetime,
+`item` text
+) ;
+Dec 09 01:22:56 [info] CREATE UNIQUE INDEX idx_post_hash ON `post`(hash)
+Dec 09 01:22:56 [info] CREATE INDEX idx_post_source_id ON `post`(source_id)
+Dec 09 01:22:56 [info] CREATE INDEX idx_post_post_time ON `post`(post_time)
+Dec 09 01:23:13 [info] SELECT version FROM `schema_info`
+Dec 09 01:23:13 [info] CREATE TABLE `post` (
+`id` int(11) UNSIGNED auto_increment PRIMARY KEY,
+`hash` varchar(32),
+`content_hash` varchar(32),
+`source_id` varchar(10),
+`cached_at` datetime,
+`posted_at` datetime,
+`item` text
+) ;
+Dec 09 01:23:47 [info] SELECT version FROM `schema_info`
+Dec 09 01:23:47 [info] CREATE TABLE `post` (
+`id` int(11) UNSIGNED auto_increment PRIMARY KEY,
+`hash` varchar(32),
+`content_hash` varchar(32),
+`source_id` varchar(10),
+`cached_at` datetime,
+`posted_at` datetime,
+`item` text
+) ;
+Dec 09 01:23:47 [info] CREATE UNIQUE INDEX idx_post_hash ON `post`(hash)
+Dec 09 01:23:47 [info] CREATE INDEX idx_post_source_id ON `post`(source_id)
+Dec 09 01:23:47 [info] CREATE INDEX idx_post_posted_at ON `post`(posted_at)
+Dec 09 01:23:47 [info] UPDATE `schema_info` SET version = 1
+Dec 09 01:23:51 [info] SELECT version FROM `schema_info`
+Dec 09 01:24:07 [info] SELECT version FROM `schema_info`
+Dec 09 01:24:07 [info] DROP TABLE `post`
+Dec 09 01:24:07 [info] UPDATE `schema_info` SET version = 0
+Dec 09 01:24:12 [info] SELECT version FROM `schema_info`
+Dec 09 01:24:12 [info] CREATE TABLE `post` (
+`id` int(11) UNSIGNED auto_increment PRIMARY KEY,
+`hash` varchar(32),
+`content_hash` varchar(32),
+`source_id` varchar(10),
+`cached_at` datetime,
+`posted_at` datetime,
+`item` text
+) ;
+Dec 09 01:24:12 [info] CREATE UNIQUE INDEX idx_post_hash ON `post`(hash)
+Dec 09 01:24:12 [info] CREATE INDEX idx_post_source_id ON `post`(source_id)
+Dec 09 01:24:12 [info] CREATE INDEX idx_post_posted_at ON `post`(posted_at)
+Dec 09 01:24:12 [info] UPDATE `schema_info` SET version = 1
+Dec 09 01:24:28 [info] SELECT version FROM `schema_info`
+Dec 09 01:24:28 [info] DROP TABLE `post`
+Dec 09 01:24:28 [info] UPDATE `schema_info` SET version = 0
+Dec 09 02:05:56 [info] SELECT version FROM `schema_info`
+Dec 09 02:05:56 [info] CREATE TABLE `post` (
+`id` int(11) UNSIGNED auto_increment PRIMARY KEY,
+`hash` varchar(32),
+`content_hash` varchar(32),
+`source_id` varchar(10),
+`cached_at` datetime,
+`posted_at` datetime,
+`item` text
+) ;
+Dec 09 02:05:56 [info] CREATE UNIQUE INDEX idx_post_hash ON `post`(hash)
+Dec 09 02:05:56 [info] CREATE INDEX idx_post_source_id ON `post`(source_id)
+Dec 09 02:05:56 [info] CREATE INDEX idx_post_posted_at ON `post`(posted_at)
+Dec 09 02:05:56 [info] UPDATE `schema_info` SET version = 1

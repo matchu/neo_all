@@ -4,12 +4,12 @@ require_once dirname(__FILE__).'/simplepie.inc';
 
 class Post {
   public $item, $source_id, $hash, $source;
-  private static $attr_names = array('item', 'source_id', 'hash', 'post_time');
+  private static $attr_names = array('item', 'source_id', 'hash', 'posted_at');
   
   function __construct($row=null) {
     if($row) {
       foreach(self::$attr_names as $attr_name) {
-        $attr = $row[$attr_name];
+        $attr =& $row[$attr_name];
         if($attr_name == 'item') $attr = unserialize($attr);
         $this->$attr_name = $attr;
       }
@@ -17,14 +17,17 @@ class Post {
   }
   
   public function save() {
-    $db = neoAllDb();
-    $statement = $db->exec('REPLACE post
-      (hash, source_id, post_time, content_hash, item) VALUES('
+    $db = new NeoAllDb();
+    $item_to_serialize = $this->item;
+    // don't serialize all other items in feed, thanks
+    unset($item_to_serialize->feed->data);
+    $exec = $db->exec('REPLACE post
+      (hash, source_id, posted_at, content_hash, item) VALUES('
       .$db->quote($this->hash()).', '
       .$db->quote($this->source_id).', '
       .$db->quote($this->item->get_date('Y-m-d H:i:s')).', '
       .$db->quote($this->content_hash()).', '
-      .$db->quote(serialize($this->item))
+      .$db->quote(serialize($item_to_serialize))
     .')');
     $this->write_cache();
   }

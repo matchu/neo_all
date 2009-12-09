@@ -8,7 +8,7 @@ require_once dirname(__FILE__).'/../lib/post.class.php';
 require_once dirname(__FILE__).'/../lib/source.class.php';
 require_once dirname(__FILE__).'/../lib/db.php';
 
-$db = neoAllDb();
+$db = new NeoAllDb();
 $total_rows = $db->query('SELECT count(*) FROM post')->fetchOne();
 
 $statement = $db->query('SELECT * FROM post');
