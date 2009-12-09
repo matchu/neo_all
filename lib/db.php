@@ -5,6 +5,7 @@ require_once 'MDB2.php';
 
 class NeoAllDb {
   public function __construct() {
+    global $db_config;
     $this->dbh =& MDB2::singleton($db_config);
     if (PEAR::isError($this->dbh)) {
       throw new NeoAllDbError($this->dbh->getMessage());
