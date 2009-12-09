@@ -1,3 +1,33 @@
+body {
+  padding: 0 1em;
+}
+
+#header {
+  display: block;
+  margin: 1em 0;
+  overflow: hidden;
+}
+
+#header h1, ul {
+  float: left;
+  margin: 0 1em 0 0;
+}
+
+#available-sources li {
+  float: left;
+  list-style: none;
+}
+
+.disabled-source {
+  filter: alpha(opacity=40);
+  opacity: 0.4;
+}
+
+#header span {
+  color: #aaa;
+  font-size: .75em;
+}
+
 #container {
   border: 1px solid #aaa;
   margin: 0 auto;
@@ -6,19 +36,21 @@
 
 .post {
   border-bottom: 1px solid #aaa;
+  padding: 0 1em 1em;
 }
 
-.post h2 a {
+h2.post-title a {
   color: black;
   text-decoration: none;
 }
 
-.post h2 a:hover {
+h2.post-title a:hover {
   text-decoration: underline;
 }
 
-.post-source-favicon {
+.source-icon {
   font-size: 75%;
+  margin-left: 10px;
 }
 
 .loading {
@@ -44,7 +76,11 @@
   background: #eee;
 }
 
-noscript {
-  color: red;
-  font-weight: bold;
+.error {
+  background: #FBE3E4;
+  border: 2px solid #FBC2C4;
+  color: #8A1F11;
+  display: block;
+  margin: 1em 0;
+  padding: .75em 1em;
 }

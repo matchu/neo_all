@@ -14,6 +14,7 @@ class Post {
         $this->$attr_name = $attr;
       }
     }
+    $this->source = new Source($this->source_id);
   }
   
   public function save() {
@@ -65,11 +66,6 @@ class Post {
     // or else we get memory leaks
     $this->item->feed->__destruct();
     unset($this->item->feed);
-  }
-  
-  public function get_source() {
-    if(!$source) $this->source = new Source($this->source_id);
-    return $this->source;
   }
 }
 ?>

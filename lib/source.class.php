@@ -49,6 +49,15 @@ class Source {
     return count($items);
   }
   
+  public function domain() {
+    preg_match('%http://([^/]+)%', $this->attrs['feed_url'], $matches);
+    return $matches[1];
+  }
+  
+  public function icon_url() {
+    return 'http://'.$this->domain().'/favicon.ico';
+  }
+  
   public static function all() {
     foreach(array_keys(self::$all_sources) as $source_id) {
       $sources[] = new Source($source_id);
