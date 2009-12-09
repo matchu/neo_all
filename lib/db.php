@@ -1,11 +1,12 @@
 <?php
 
-require_once dirname(__FILE__).'/../config/db_config.php';
+// include db_config if PEAR config is needed, e.g. Dreamhost
+require dirname(__FILE__).'/../config/db_config.php';
 require_once 'MDB2.php';
 
 class NeoAllDb {
   public function __construct() {
-    global $db_config;
+    require dirname(__FILE__).'/../config/db_config.php';
     $this->dbh =& MDB2::singleton($db_config);
     if (PEAR::isError($this->dbh)) {
       throw new NeoAllDbError($this->dbh->getMessage());
