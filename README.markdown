@@ -9,7 +9,7 @@ development to the public very soon, I promise :)
 Some basic things to understand:
 
   * written in PHP
-  * the web root is in `/www/` - most of these files are private
+  * the web root is in `/www/` - project files not in there are private
   * Dependencies (you should have a lot already):
     - Apache (.htaccess files)
     - PHP 5
