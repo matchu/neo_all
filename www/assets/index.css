@@ -90,7 +90,7 @@ h2.post-title a:hover {
   border: 2px solid #FBC2C4;
   color: #8A1F11;
   display: block;
-  margin: 1em 0;
+  margin: 1em .5em;
   padding: .75em 1em;
 }
 
