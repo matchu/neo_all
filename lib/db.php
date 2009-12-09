@@ -1,4 +1,9 @@
 <?php
+set_include_path(
+	get_include_path() . 
+	PATH_SEPARATOR . '/usr/local/lib/php'
+);
+
 require_once 'MDB2.php';
 
 class NeoAllDb {
