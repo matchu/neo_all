@@ -38,7 +38,7 @@ Post.append_posts_from_json = function (posts) {
 }
 
 Post.clear = function () {
-  $('#posts').html('');
+  $('#posts').html('').addClass('loading');
 }
 
 Post.get_top = function () {
