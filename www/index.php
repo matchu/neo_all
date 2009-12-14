@@ -14,19 +14,18 @@ require_once '../lib/template.class.php';
     <div id="header">
       <h1>NeoAll - because nobody's perfect</h1>
       <ul id="available-sources">
-      <?php
-      $template = new NeoAllTemplate();
-      foreach(Source::all() as $source):
-        ?>
+<?php
+$template = new NeoAllTemplate('../templates/source_icon.tpl.php');
+$template->indent_level = 5;
+foreach(Source::all() as $source):
+  $template->source = $source;
+?>
         <li>
-          <?php
-          $template->source = $source;
-          $template->output('source_icon.tpl.php');
-          ?>
+          <?= $template->fetch() ?>
         </li>
-        <?php
-      endforeach;
-      ?>
+<?php
+endforeach;
+?>
       </ul>
       <span>&#8592; toggle sources</span>
     </div>
@@ -41,7 +40,11 @@ require_once '../lib/template.class.php';
       <div id="posts" class="loading"></div>
       <a id="next-page" href="#">next page &raquo;</a>
     </div>
-    <?php include('footer.html'); ?>
+<?php
+$template = new NeoAllTemplate('footer.html');
+$template->indent_level = 2;
+?>
+    <?= $template->fetch(); ?>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <script type="text/javascript" src="/assets/index.js"></script>
   </body>

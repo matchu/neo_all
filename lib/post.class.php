@@ -37,10 +37,12 @@ class Post {
     $write_to = dirname(__FILE__).'/../www/' . $this->cache_location();
     $file = fopen($write_to, 'w');
     $body = $this->item->get_content();
-    $template = new NeoAllTemplate();
+    $template = new NeoAllTemplate(
+      dirname(__FILE__).'/../templates/post.tpl.php'
+    );
     $template->post = $this;
     $template->item = $this->item;
-    $content = $template->fetch('post.tpl.php');
+    $content = $template->fetch();
     fwrite($file, $content);
     fclose($file);
   }
