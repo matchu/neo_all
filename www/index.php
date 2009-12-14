@@ -34,6 +34,10 @@ require_once '../lib/template.class.php';
       NeoAll uses Javascript. Could you turn yours on, please?
     </noscript>
     <div id="container">
+      <a id="reload" href="#">
+        <img src="/assets/arrow_refresh.png" width="16" height="16" />
+        <span>Reload</span>
+      </a>
       <div id="posts" class="loading"></div>
       <a id="next-page" href="#">next page &raquo;</a>
     </div>

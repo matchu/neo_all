@@ -27,6 +27,11 @@ class NeoAllDb {
     return $this->dbh->quote($str);
   }
   
+  public function setLimit() {
+    $args = func_get_args();
+    return $this->generic_call('setLimit', $args);
+  }
+  
   private function generic_call($method, $args) {
     $res = call_user_func_array(array($this->dbh, $method), $args);
     if (PEAR::isError($res)) {

@@ -31,8 +31,7 @@ function Post(data) {
 }
 
 Post.append_posts_from_json = function (posts) {
-  $.each(posts, function () {
-    var post = new Post(this);
+  Post.load_posts_from_json(posts, function (post) {
     $('#posts').append(post.element);
   });
 }
@@ -41,14 +40,24 @@ Post.clear = function () {
   $('#posts').html('').addClass('loading');
 }
 
-Post.get_top = function () {
-  $.ajax({
-    url: '/sources/' + Post.sources() + '/top.json',
+Post.get = function (filename, options) {
+  var default_options = {
+    url: '/sources/' + Post.sources() + '/' + filename + '.json',
     dataType: 'json',
-    success: function (posts) {
-      Post.append_posts_from_json(posts);
-      $('#posts').removeClass('loading');
+    success: Post.append_posts_from_json,
+    error: function () {
+      $.jGrowl(Post.loading_error);
     },
+    complete: function () {
+      $('#posts, #reload').removeClass('loading');
+    }
+  }
+  $.ajax($.extend(default_options, options));
+}
+
+Post.get_top = function () {
+  $('#posts').html('');
+  Post.get('top', {
     error: function () {
       $('#posts').removeClass('loading').html('<div class="error">'
         + Post.loading_error + '</div>');
@@ -56,29 +65,62 @@ Post.get_top = function () {
   });
 }
 
-Post.get_older = function (callback) {
-  var last_post = $('.post:last');
+Post.get_older = function () {
+  var last_post = $('.post:last'), callback = function () {
+    $('#next-page').removeClass('loading');
+  };
   if(!last_post.length) {
     $.jGrowl("I can't quite get the next page when there's no first page...");
     callback();
     return false;
   }
-  var last_post_hash = last_post.data('post').hash,
-    json_path = '/sources/' + Post.sources() + '/before_' + last_post_hash + '.json';
-  $.ajax({
-    url: json_path,
-    dataType: 'json',
-    success: function (posts) {
-      Post.append_posts_from_json(posts);
-    },
-    error: function () {
-      $.jGrowl(Post.loading_error);
-    },
+  var last_post_hash = last_post.data('post').hash;
+  Post.get('before_' + last_post_hash, {
     complete: callback
   });
 }
 
+Post.get_newer = function (first_post) {
+  var first_post_hash = first_post.data('post').hash;
+  Post.get('after_' + first_post_hash, {
+    success: function (posts) {
+      if(posts.length) {
+        Post.prepend_posts_from_json(posts);
+      } else {
+        $.jGrowl("Nothing new, captain.", {life: 1000});
+      }
+    }
+  });
+}
+
 Post.loading_error = 'Could not load posts. Maybe the server is down?';
+
+Post.load_posts_from_json = function (posts, callback) {
+  $.each(posts, function () {
+    var post = new Post(this);
+    callback(post);
+  });
+}
+
+Post.prepend_posts_from_json = function (posts) {
+  var elements = [];
+  Post.load_posts_from_json(posts, function (post) {
+    elements.push(post.element);
+  });
+  $.each(elements.reverse(), function () {
+    $('#posts').prepend(this);
+  });
+}
+
+Post.reload = function () {
+  $('#reload').addClass('loading');
+  var first_post = $('.post:first');
+  if(first_post.length) {
+    Post.get_newer(first_post); // why find it twice?
+  } else {
+    Post.get_top();
+  }
+}
 
 Post.sources = function () {
   var all_sources = $('#available-sources a').map(function () {
@@ -102,10 +144,12 @@ $(function () {
   Post.get_top();
   $('#next-page').click(function (e) {
     e.preventDefault();
-    var nextPageEl = $(this).addClass('loading');
-    Post.get_older(function () {
-      nextPageEl.removeClass('loading');
-    });
+    $(this).addClass('loading');
+    Post.get_older();
+  });
+  $('#reload').click(function (e) {
+    e.preventDefault();
+    Post.reload();
   });
   $('#available-sources a').click(function (e) {
     e.preventDefault();

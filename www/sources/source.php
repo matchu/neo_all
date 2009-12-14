@@ -34,9 +34,13 @@ if($mode == 'before' || $mode == 'after') {
   die('404 Not Found');
 }
 
+if($mode != 'after') { // we want all newer posts, not just some
+  $db->setLimit(PER_PAGE);
+}
+
 $conditions = implode(' AND ', $conditions_array);
 $posts_query = $db->query("SELECT hash, cached_at FROM post
-  WHERE $conditions ORDER BY posted_at DESC LIMIT 0, ".PER_PAGE);
+  WHERE $conditions ORDER BY posted_at DESC $limit");
 $posts = array();
 while($post_row = $posts_query->fetchRow(MDB2_FETCHMODE_ASSOC)) {
   $post = (object) array();
