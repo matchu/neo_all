@@ -11,7 +11,7 @@ a:hover {
   text-decoration: underline;
 }
 
-#posts.loading, post.loading, #next-page.loading,
+#posts.loading, .post.loading, #next-page.loading,
 #next-page.loading:hover, #reload.loading {
   background: url(/assets/loading.gif) no-repeat center 8px;
   height: 24px;
