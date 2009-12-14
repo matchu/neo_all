@@ -48,18 +48,37 @@ a:hover {
   padding: 0 1em 1em;
 }
 
-h2.post-title a {
+.post-header {
+  margin: 1em 0;
+  overflow: hidden;
+}
+
+.post-header > * {
+  float: left;
+}
+
+.post-title {
+  margin: 0;
+}
+
+.post-title a {
   color: black;
   text-decoration: none;
 }
 
-h2.post-title a:hover {
+.post-title a:hover {
   text-decoration: underline;
 }
 
 .source-icon {
   font-size: 75%;
   margin-left: 10px;
+}
+
+.post-time {
+  color: #aaa;
+  font-size: .75em;
+  margin: .5em 0 0 1em;
 }
 
 .loading {

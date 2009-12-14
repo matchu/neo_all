@@ -71,5 +71,28 @@ class Post {
     if(!$this->source) $this->source = new Source($this->source_id);
     return $this->source;
   }
+  
+  public function time_ago_in_words() {
+    $diff = time() - strtotime($this->item->get_date());
+    if ($diff<60)
+      return $diff . " second" . plural($diff) . " ago";
+    $diff = round($diff/60);
+    if ($diff<60)
+      return $diff . " minute" . plural($diff) . " ago";
+    $diff = round($diff/60);
+    if ($diff<24)
+      return $diff . " hour" . plural($diff) . " ago";
+    $diff = round($diff/24);
+    if ($diff<7)
+      return $diff . " day" . plural($diff) . " ago";
+    $diff = round($diff/7);
+    if ($diff<4)
+      return $diff . " week" . plural($diff) . " ago";
+    return "on " . date("F j, Y", strtotime($date));
+  }
+}
+
+function plural($num) {
+  if($num != 1) return "s";
 }
 ?>
