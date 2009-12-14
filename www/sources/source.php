@@ -3,6 +3,8 @@ foreach(array('source.class', 'post.class', 'db', 'stripslashes') as $lib) {
   require_once dirname(__FILE__)."/../../lib/$lib.php";
 }
 
+define('PER_PAGE', 5);
+
 $db = new NeoAllDb();
 
 $directory = $_GET['directory'];
@@ -22,21 +24,19 @@ $source_list = implode(',', $source_names);
 $conditions_array = array("source_id IN ($source_list)");
 
 list($mode, $splitting_hash) = explode('_', $file, 2);
-if($mode == 'top') {
-  # no special action
-} elseif($mode == 'before' || $mode == 'after') {
+if($mode == 'before' || $mode == 'after') {
   $operator = $mode == 'before' ? '<' : '>';
   $quoted_hash = $db->quote($splitting_hash);
   $conditions_array[] = "posted_at $operator
     (SELECT posted_at FROM post WHERE hash = $quoted_hash)";
-} else {
+} elseif($mode != 'top') {
   header('HTTP/1.1 404 Not Found');
   die('404 Not Found');
 }
 
 $conditions = implode(' AND ', $conditions_array);
 $posts_query = $db->query("SELECT hash, cached_at FROM post
-  WHERE $conditions ORDER BY posted_at DESC LIMIT 0,10");
+  WHERE $conditions ORDER BY posted_at DESC LIMIT 0, ".PER_PAGE);
 $posts = array();
 while($post_row = $posts_query->fetchRow(MDB2_FETCHMODE_ASSOC)) {
   $post = (object) array();
