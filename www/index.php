@@ -6,9 +6,10 @@ require_once '../lib/template.class.php';
 <html>
   <head>
     <title>NeoAll - because nobody's perfect</title>
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.0.0/build/cssreset/reset-min.css&3.0.0/build/cssbase/base-min.css&3.0.0/build/cssfonts/fonts-min.css"> 
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.0.0/build/cssreset/reset-min.css&amp;3.0.0/build/cssbase/base-min.css&amp;3.0.0/build/cssfonts/fonts-min.css"> 
     <link rel="stylesheet" type="text/css" href="/assets/jquery.jgrowl.css" />
     <link rel="stylesheet" type="text/css" href="/assets/index.css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
   </head>
   <body>
     <div id="header">
